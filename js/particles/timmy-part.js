@@ -14,7 +14,7 @@ export default class TimmyPart {
   }
 
   tick(canvas) {
-    this.vy += 0.1;
+    // this.vy += 0.1;
     this.x += this.vx;
     this.y += this.vy;
     this.rotation += this.spin;

@@ -26,9 +26,9 @@ addEventListener('resize', () => {
 
 let timmyHandler = new TimmyPartHandler();
 
-let fillAlpha = 1;
+let fillAlpha = 0.1;
 let timmy = null;
-let s = 50;
+let s = 10;
 let timmyWidth = 3360 / s;
 let timmyHeight = 5040 / s;
 
@@ -49,31 +49,33 @@ function loop() {
 
 	/////////////////////////////////////////////////// DRAW TIMMMIES (PLURAL)
 
-	timmyHandler.add(new TimmyPart(
-		randint(0, canvas.width),
-		-randint(25, 50),
-		timmyWidth,
-		timmyHeight,
-		0,
-		0,
-		0,
-		Math.random() * 0.1
-	));
+	// timmyHandler.add(new TimmyPart(
+	// 	randint(0, canvas.width),
+	// 	-randint(25, 50),
+	// 	timmyWidth,
+	// 	timmyHeight,
+	// 	0,
+	// 	0,
+	// 	0,
+	// 	Math.random() * 0.1
+	// ));
+
+	// FIRE TIMMIES
 
 	timmyHandler.tick(canvas);
 	timmyHandler.draw(c, timmy);
 
 	/////////////////////////////////////////////////// DRAW TIMMMY
-	// c.save();
-	// c.translate(canvas.width / 2 , canvas.height / 2);
-	// c.rotate(a);
-	// c.drawImage(
-	// 	timmy,
-	// 	-timmyWidth / 2,
-	// 	-timmyHeight / 2,
-	// 	timmyWidth,
-	// 	timmyHeight);
-	// c.restore();
+	c.save();
+	c.translate(canvas.width / 2 , canvas.height / 2);
+	c.rotate(a);
+	c.drawImage(
+		timmy,
+		-timmyWidth / 2,
+		-timmyHeight / 2,
+		timmyWidth,
+		timmyHeight);
+	c.restore();
 }
 
 function loadImage(path) {
@@ -90,4 +92,8 @@ function randint(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function rands() {
+	return Math.random() < 0.5 ? -1 : 1;
 }
