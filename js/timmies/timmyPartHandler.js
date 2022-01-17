@@ -1,7 +1,6 @@
 
-import TimmyPart from './timmy-part.js';
 
-export default class TimmyPartHandler {
+class TimmyPartHandler {
   
   constructor() {
     this.timmies = [];

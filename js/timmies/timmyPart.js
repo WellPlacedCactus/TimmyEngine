@@ -1,20 +1,22 @@
 
-export default class TimmyPart {
 
-  constructor(x, y, w, h, vx, vy, rotation, spin) {
+class TimmyPart {
+
+  constructor(x, y, scale, vx, vy, rotation, spin) {
     this.x = x;
     this.y = y;
-    this.w = w;
-    this.h = h;
+    this.scale = scale;
     this.vx = vx;
     this.vy = vy;
     this.rotation = rotation;
     this.spin = spin;
+    this.width = 3360 * this.scale;
+    this.height = 5040 * this.scale;
     this.dead = false;
   }
 
   tick(canvas) {
-    // this.vy += 0.1;
+    // this.vy += 0.1; // GRAVITYYYYY
     this.x += this.vx;
     this.y += this.vy;
     this.rotation += this.spin;
@@ -36,10 +38,10 @@ export default class TimmyPart {
     c.rotate(this.rotation);
     c.drawImage(
       image,
-      -this.w / 2,
-      -this.h / 2,
-      this.w,
-      this.h
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height
     );
     c.restore();
   }

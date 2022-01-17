@@ -1,9 +1,4 @@
 
-/////////////////////////////////////////////////////// IMPORTS
-
-import TimmyPart from './particles/timmy-part.js';
-import TimmyPartHandler from './particles/timmy-part-handler.js';
-
 /////////////////////////////////////////////////////// ENGINE
 
 const canvas = document.querySelector('canvas');
@@ -22,61 +17,49 @@ addEventListener('resize', () => {
 	canvas.height = innerHeight;
 });
 
-/////////////////////////////////////////////////////// IMPLEMENTATION
-
-let timmyHandler = new TimmyPartHandler();
+/////////////////////////////////////////////////////// SETTINGS
 
 let fillAlpha = 0.1;
-let timmy = null;
-let s = 10;
-let timmyWidth = 3360 / s;
-let timmyHeight = 5040 / s;
+let timmyImage = null;
+let timmyHandler = null;
+
+/////////////////////////////////////////////////////// INIT
 
 async function init() {
-	timmy = await loadImage('./images/timmy.jpg');
+	timmyImage = await loadImage('./images/timmy.jpg');
+	timmyHandler = new TimmyPartHandler();
+	timmyHandler.add(new TimmyPart(
+		canvas.width / 2,
+		canvas.height / 2,
+		0.1,
+		0,
+		0,
+		0,
+		0.01
+	));
+
 	loop();
 }
 
-let a = 0;
-function loop() {
-	a += 0.01;
-	/////////////////////////////////////////////////// loop
-	requestAnimationFrame(loop);
+/////////////////////////////////////////////////////// LOOP
 
-	/////////////////////////////////////////////////// fill
+function loop() {
+
+	/////////////////////////////////////////////////// FILL
 	c.fillStyle = `rgba(0, 0, 0, ${fillAlpha})`;
 	c.fillRect(0, 0, canvas.width, canvas.height);
 
-	/////////////////////////////////////////////////// DRAW TIMMMIES (PLURAL)
-
-	// timmyHandler.add(new TimmyPart(
-	// 	randint(0, canvas.width),
-	// 	-randint(25, 50),
-	// 	timmyWidth,
-	// 	timmyHeight,
-	// 	0,
-	// 	0,
-	// 	0,
-	// 	Math.random() * 0.1
-	// ));
-
-	// FIRE TIMMIES
+	/////////////////////////////////////////////////// HANDLE ALL THOSE TIMMIES
 
 	timmyHandler.tick(canvas);
-	timmyHandler.draw(c, timmy);
+	timmyHandler.draw(c, timmyImage);
 
-	/////////////////////////////////////////////////// DRAW TIMMMY
-	c.save();
-	c.translate(canvas.width / 2 , canvas.height / 2);
-	c.rotate(a);
-	c.drawImage(
-		timmy,
-		-timmyWidth / 2,
-		-timmyHeight / 2,
-		timmyWidth,
-		timmyHeight);
-	c.restore();
+	/////////////////////////////////////////////////// LOOP
+
+	requestAnimationFrame(loop);
 }
+
+// takes a path and returns an image in the form of a promise
 
 function loadImage(path) {
 	return new Promise(resolve => {
@@ -88,11 +71,15 @@ function loadImage(path) {
 	});
 }
 
+// copyrighted function
+
 function randint(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+// returns either -1 or 1
 
 function rands() {
 	return Math.random() < 0.5 ? -1 : 1;
