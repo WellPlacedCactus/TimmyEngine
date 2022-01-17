@@ -45,4 +45,18 @@ class TimmyPart {
     );
     c.restore();
   }
+
+  drawBounds(c) {
+    c.strokeStyle = 'white';
+    c.save();
+    c.translate(this.x, this.y);
+    c.rect(
+      -this.width / 2,
+      -this.height / 2,
+      this.width,
+      this.height
+    );
+    c.stroke();
+    c.restore();
+  }
 }
